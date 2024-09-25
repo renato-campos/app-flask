@@ -1,46 +1,24 @@
-from flask import Flask, request, render_template
+# importando do módulo a classe
+from flask import Flask, url_for, render_template
 
-app = Flask(__name__)
+# iniciar a classe na variável
+app = Flask(__name__)   # sempre no topo do código
+
+# rotas
 
 
 @app.route('/')
-def hello():
-    return 'Hello, World!'
+def ola():
+    return render_template("index.html")
 
-
-@app.route('/about')
-def about():
-    return 'This is the about page.'
-
-
-@app.route('/user/<name>')
-def greet_user(name):
-    return f'Hello, {name}!'
-
-
-@app.route('/square/<int:num>')
-def squared(num):
-    return f'O quadrado de {num} é {num ** 2}!'
-
-
-# Rota que exibe o formulário
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    if request.method == 'POST':
-        # Pegar os dados do formulário usando request.form
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
-        return f"Received message from {name} with email {email}: {message}"
-    return '''
-        <form method="POST" action="/contact">
-            Name: <input type="text" name="name"><br>
-            Email: <input type="email" name="email"><br>
-            Message: <textarea name="message"></textarea><br>
-            <input type="submit" value="Enviar">
-        </form>
+@app.route('/sobre')
+def sobre():
+    texto = f'''
+    <b>CursoemVideo</b>: assista os vídeos no
+    <a href="https://youtube.com/cursoemvideo" target="_blank">Canal no YouTube</a>
+    <br> <a href='{url_for("ola")}'>página inicial</a>
     '''
+    return texto
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# função que executa nosso servidor web no modo desenvolvedor
+app.run(debug=True)  # sempre no final do código
